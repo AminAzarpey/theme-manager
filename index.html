@@ -6,9 +6,8 @@
     <title>Theme Manager Demo</title>
 
     <link id="theme-css" rel="stylesheet" href="./dist/theme-light.default.ltr.css" />
-
 </head>
-<body>
+<body class="theme-light palette-default">
 <div class="container py-5">
     <h1 class="mb-4">🎨 Theme Manager Demo</h1>
 
@@ -27,18 +26,108 @@
         </select>
     </div>
 
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Bootstrap Themed Card</h5>
-            <p class="card-text">Primary color is controlled by the active palette.</p>
-            <button class="btn btn-primary">Primary Button</button>
+    <hr />
+
+    <!-- BUTTONS -->
+    <h2 class="mt-4">Buttons</h2>
+    <div class="btn-group mb-4" role="group">
+        <button class="btn btn-primary">Primary</button>
+        <button class="btn btn-secondary">Secondary</button>
+        <button class="btn btn-success">Success</button>
+        <button class="btn btn-danger">Danger</button>
+        <button class="btn btn-warning">Warning</button>
+        <button class="btn btn-info">Info</button>
+        <button class="btn btn-light">Light</button>
+        <button class="btn btn-dark">Dark</button>
+    </div>
+
+    <!-- ALERTS -->
+    <h2>Alerts</h2>
+    <div class="alert alert-primary">Primary Alert</div>
+    <div class="alert alert-danger">Danger Alert</div>
+    <div class="alert alert-success">Success Alert</div>
+    <div class="alert alert-warning">Warning Alert</div>
+
+    <!-- FORM -->
+    <h2>Form</h2>
+    <form class="mb-4">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email" />
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password" />
+        </div>
+        <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" id="check" />
+            <label class="form-check-label" for="check">Remember me</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <!-- TABLE -->
+    <h2>Table</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>First</th>
+            <th>Last</th>
+            <th>Handle</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><td>1</td><td>Mark</td><td>Otto</td><td>@motto</td></tr>
+        <tr><td>2</td><td>Jacob</td><td>Thornton</td><td>@fat</td></tr>
+        </tbody>
+    </table>
+
+    <!-- BADGES -->
+    <h2>Badges</h2>
+    <span class="badge bg-primary">Primary</span>
+    <span class="badge bg-success">Success</span>
+    <span class="badge bg-danger">Danger</span>
+
+    <!-- PAGINATION -->
+    <h2 class="mt-4">Pagination</h2>
+    <nav>
+        <ul class="pagination">
+            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </nav>
+
+    <!-- DROPDOWN -->
+    <h2>Dropdown</h2>
+    <div class="dropdown mb-4">
+        <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">Dropdown</button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else</a></li>
+        </ul>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div class="toast show">
+            <div class="toast-header">
+                <strong class="me-auto">Bootstrap</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+                Hello, this is a toast message.
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Theme Manager JS Module -->
+<!-- JS -->
 <script type="module">
-    import * as ThemeManager from './src/js/core';
+    import * as ThemeManager from './src/js/core.js';
 
     window.addEventListener('DOMContentLoaded', () => {
         ThemeManager.initThemeSystem();
@@ -56,5 +145,8 @@
         });
     });
 </script>
+
+<!-- Bootstrap JS for dropdowns/toasts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
