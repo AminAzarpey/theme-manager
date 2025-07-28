@@ -1,5 +1,30 @@
 
-@use "../mixins" as *;
-@import "../../../node_modules/bootstrap/scss/bootstrap";
-@include theme("theme-light", #ffffff, #111111);
-@include palette("red", #dc3545);
+
+// Load theme and palette
+@use "../theme-light" as theme;
+@use "../palette-red" as palette;
+@use "../mixins/theme" as *;
+@import "../../../node_modules/bootstrap/scss/functions";
+// Set required Bootstrap variables
+$theme-colors: palette.$theme-colors;
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+
+$body-bg: theme.$theme-light-bg;
+$body-color: theme.$theme-light-text;
+
+// Import Bootstrap parts
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/variables-dark";
+@import "../../../node_modules/bootstrap/scss/maps";
+@import "../../../node_modules/bootstrap/scss/mixins";
+@import "../../../node_modules/bootstrap/scss/root";
+@import "../../../node_modules/bootstrap/scss/utilities";
+@import "../../../node_modules/bootstrap/scss/reboot";
+@import "../../../node_modules/bootstrap/scss/type";
+@import "../../../node_modules/bootstrap/scss/buttons";
+@import "../../../node_modules/bootstrap/scss/card";
+@import "../../../node_modules/bootstrap/scss/forms";
+@import "../../../node_modules/bootstrap/scss/utilities/api";
+
+// Generate theme class
+@include bootstrap-theme("theme-light", $theme-colors, $body-bg, $body-color);

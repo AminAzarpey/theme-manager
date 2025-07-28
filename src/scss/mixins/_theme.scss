@@ -1,0 +1,42 @@
+// src/scss/mixins/_theme.scss
+
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+
+/// @param $theme-name - like "theme-light"
+/// @param $theme-map - theme colors map (like $theme-colors)
+/// @param $bg - background
+/// @param $color - text color
+@mixin bootstrap-theme($theme-name, $theme-map, $bg, $color) {
+  $theme-rgb-map: map-loop($theme-map, to-rgb, "$value");
+
+  @at-root .#{$theme-name} {
+    // theme color vars
+    @each $name, $value in $theme-map {
+      --#{$variable-prefix}#{$name}: #{$value};
+    }
+
+    @each $name, $value in $theme-rgb-map {
+      --#{$variable-prefix}#{$name}-rgb: #{$value};
+    }
+
+    // body
+    --#{$variable-prefix}body-bg: #{$bg};
+    --#{$variable-prefix}body-bg-rgb: #{to-rgb($bg)};
+    --#{$variable-prefix}body-color: #{$color};
+    --#{$variable-prefix}body-color-rgb: #{to-rgb($color)};
+
+    // extra (fonts, gradient)
+    --#{$variable-prefix}font-sans-serif: #{inspect($font-family-sans-serif)};
+    --#{$variable-prefix}font-monospace: #{inspect($font-family-monospace)};
+    --#{$variable-prefix}body-font-family: #{$font-family-base};
+    --#{$variable-prefix}body-font-size: #{$font-size-base};
+    --#{$variable-prefix}body-font-weight: #{$font-weight-base};
+    --#{$variable-prefix}body-line-height: #{$line-height-base};
+    @if $body-text-align != null {
+      --#{$variable-prefix}body-text-align: #{$body-text-align};
+    }
+    --#{$variable-prefix}root-font-size: #{$font-size-root};
+    --#{$variable-prefix}gradient: #{$gradient};
+  }
+}

@@ -1,28 +1,69 @@
-
-/* THEMES */
-@use "mixins" as *;
-//@use "theme-light" as *;
-//@use "theme-dark" as *;
-//
-///* PALETTES */
-//@use "palette-default" as *;
-//@use "palette-red" as *;
-//@use "palette-orange" as *;
-//@use "palette-green" as *;
-
-// 🟢 Theme Definitions
-@use "generated/theme-light.default";
-@use "generated/theme-light.red";
-@use "generated/theme-light.orange";
-@use "generated/theme-light.green";
-
-@use "generated/theme-dark.default";
-@use "generated/theme-dark.red";
-@use "generated/theme-dark.orange";
-@use "generated/theme-dark.green";
-/* BOOTSTRAP */
+/* PALETTE THEMES*/
+@use "mixins/theme" as *;
 
 
-@import "../../node_modules/bootstrap/scss/bootstrap";
+@use "generated/theme-light.default" as lightTheme;
+@use "generated/theme-light.red" as redTheme;
+@use "generated/theme-light.orange" as orangeTheme;
+@use "generated/theme-light.green" as greenTheme;
+
+@use "generated/theme-dark.default" as darkTheme;
+@use "generated/theme-dark.red" as redDarkTheme;
+@use "generated/theme-dark.orange" as orangeDarkTheme;
+@use "generated/theme-dark.green" as greenDarkTheme;
+
+// 1. Bootstrap functions first
+@import "../../node_modules/bootstrap/scss/functions";
 
 
+
+// 3. تعریف متغیرهای مورد انتظار Bootstrap
+$theme-colors: lightTheme.$theme-colors;
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+
+$body-bg: lightTheme.$theme-light-bg;
+$body-color: lightTheme.$theme-light-text;
+
+// 4. Bootstrap core vars
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/variables-dark";
+@import "../../node_modules/bootstrap/scss/maps";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/root";
+
+// 5. Optional Bootstrap components
+@import "../../node_modules/bootstrap/scss/utilities";
+@import "../../node_modules/bootstrap/scss/reboot";
+@import "../../node_modules/bootstrap/scss/type";
+@import "../../node_modules/bootstrap/scss/buttons";
+@import "../../node_modules/bootstrap/scss/card";
+@import "../../node_modules/bootstrap/scss/forms";
+@import "../../node_modules/bootstrap/scss/tables";
+
+// 6. Utilities API
+@import "../../node_modules/bootstrap/scss/utilities/api";
+
+// 7. حالت کلاس دستی (theme-light, theme-dark, ...)
+@include bootstrap-theme("theme-light", $theme-colors, $body-bg, $body-color);
+
+
+
+.theme-auto {
+  @include color-scheme(light) {
+    @include bootstrap-theme(
+                    "theme-auto",
+                    lightTheme.$theme-colors,
+                    lightTheme.$theme-light-bg,
+                    lightTheme.$theme-light-text
+    );
+  }
+
+  @include color-scheme(dark) {
+    @include bootstrap-theme(
+                    "theme-auto",
+                    darkTheme.$theme-colors,
+                    darkTheme.$theme-dark-bg,
+                    darkTheme.$theme-dark-text
+    );
+  }
+}

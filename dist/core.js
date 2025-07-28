@@ -4,17 +4,21 @@ const THEME_KEY = "tm_theme";
 const PALETTE_KEY = "tm_palette";
 const DIRECTION_KEY = "tm_dir";
 
-let currentTheme = localStorage.getItem(THEME_KEY) || "light";
+let currentTheme = localStorage.getItem(THEME_KEY)
+    || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 let currentPalette = localStorage.getItem(PALETTE_KEY) || "default";
 let currentDirection = localStorage.getItem(DIRECTION_KEY) || "ltr";
 
 const themeLinkId = "theme-css";
 
 function applyCssFile() {
-    const fileName = `theme-${currentTheme}.${currentPalette}.${currentDirection}.css`;
+    const fileName = `theme-${currentTheme}.${currentPalette}${currentDirection === 'rtl' ? '.rtl' : ''}.css`;
     const href = `dist/${fileName}`;
     const linkTag = document.getElementById(themeLinkId);
     console.log(fileName);
+    document.body.className = `theme-${currentTheme} palette-${currentPalette}`;
+    document.documentElement.setAttribute("dir", currentDirection);
+
 
     if (linkTag) {
         linkTag.setAttribute("href", href);
@@ -70,6 +74,15 @@ function getCurrentConfig() {
         direction: currentDirection,
     };
 }
+function resetThemeSystem() {
+    localStorage.removeItem(THEME_KEY);
+    localStorage.removeItem(PALETTE_KEY);
+    localStorage.removeItem(DIRECTION_KEY);
+    currentTheme = "light";
+    currentPalette = "default";
+    currentDirection = "ltr";
+    initThemeSystem();
+}
 
-export { applyPalette, getCurrentConfig, initThemeSystem, toggleDirection, toggleTheme };
+export { applyPalette, getCurrentConfig, initThemeSystem, resetThemeSystem, toggleDirection, toggleTheme };
 //# sourceMappingURL=core.js.map

@@ -28,3 +28,6 @@ $body-color: theme.$theme-dark-text;
 
 // Generate theme class
 @include bootstrap-theme("theme-dark", $theme-colors, $body-bg, $body-color);
+body {
+  direction: rtl;
+}
