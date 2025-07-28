@@ -1,6 +1,6 @@
 {
   "name": "bootkit-theme-manager",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A flexible theme and color system (light/dark, RTL, palettes) for web apps using JS, Sass, and Bootstrap",
   "main": "dist/core.js",
   "module": "dist/core.js",
@@ -17,7 +17,6 @@
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
-
   "keywords": [
     "theme",
     "dark",
