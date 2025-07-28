@@ -1,16 +1,14 @@
 /* PALETTE THEMES*/
+
+
+@use "./theme-light" as lightTheme;
+@use "./theme-dark" as darkTheme;
+
+@use "./palette-orange" as activePalette;
+@use "./palette-default" as defaultPalette;
+
 @use "mixins/theme" as *;
 
-
-@use "generated/theme-light.default" as lightTheme;
-@use "generated/theme-light.red" as redTheme;
-@use "generated/theme-light.orange" as orangeTheme;
-@use "generated/theme-light.green" as greenTheme;
-
-@use "generated/theme-dark.default" as darkTheme;
-@use "generated/theme-dark.red" as redDarkTheme;
-@use "generated/theme-dark.orange" as orangeDarkTheme;
-@use "generated/theme-dark.green" as greenDarkTheme;
 
 // 1. Bootstrap functions first
 @import "../../node_modules/bootstrap/scss/functions";
@@ -18,7 +16,7 @@
 
 
 // 3. تعریف متغیرهای مورد انتظار Bootstrap
-$theme-colors: lightTheme.$theme-colors;
+$theme-colors: activePalette.$theme-colors;
 $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
 
 $body-bg: lightTheme.$theme-light-bg;
@@ -52,7 +50,7 @@ $body-color: lightTheme.$theme-light-text;
   @include color-scheme(light) {
     @include bootstrap-theme(
                     "theme-auto",
-                    lightTheme.$theme-colors,
+                    defaultPalette.$theme-colors,
                     lightTheme.$theme-light-bg,
                     lightTheme.$theme-light-text
     );
@@ -61,7 +59,7 @@ $body-color: lightTheme.$theme-light-text;
   @include color-scheme(dark) {
     @include bootstrap-theme(
                     "theme-auto",
-                    darkTheme.$theme-colors,
+                    defaultPalette.$theme-colors,
                     darkTheme.$theme-dark-bg,
                     darkTheme.$theme-dark-text
     );
