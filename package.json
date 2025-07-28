@@ -1,10 +1,10 @@
 {
-  "name": "theme-manager",
+  "name": "bootkit-theme-manager",
   "version": "1.0.0",
   "description": "A flexible theme and color system (light/dark, RTL, palettes) for web apps using JS, Sass, and Bootstrap",
   "main": "dist/core.js",
   "module": "dist/core.js",
-  "style": "dist/theme-manager.css",
+  "style": "dist/theme-light.default.ltr.css",
   "types": "dist/index.d.ts",
   "scripts": {
     "generate": "node src/js/generate-themes.cjs",
@@ -78,5 +78,5 @@
     ".": {
       "import": "./dist/core.js"
     }
-  },
+  }
 }

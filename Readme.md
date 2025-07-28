@@ -14,14 +14,14 @@ Supports:
 ## 🚀 Installation
 
 ```bash
-npm install theme-manager
+npm install bootkit-theme-manager
 ```
 
 or use via CDN:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-manager@1.0.0/dist/theme-light.default.ltr.css" />
-<script type="module" src="https://cdn.jsdelivr.net/npm/theme-manager@1.0.0/dist/core.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootkit-theme-manager@1.0.0/dist/theme-light.default.ltr.css" />
+<script type="module" src="https://cdn.jsdelivr.net/npm/bootkit-theme-manager@1.0.0/dist/core.js"></script>
 ```
 
 ---
@@ -47,14 +47,14 @@ ThemeManager.applyPalette('red');
 1. Include CSS in `angular.json`:
 ```json
 "styles": [
-  "node_modules/theme-manager/dist/theme-light.default.ltr.css",
+  "node_modules/bootkit-theme-manager/dist/theme-light.default.ltr.css",
   "node_modules/bootstrap/dist/css/bootstrap.min.css"
 ],
 "scripts": []
 ```
 2. Load JS in your root component or service:
 ```ts
-import * as ThemeManager from 'theme-manager/dist/core.js';
+import * as ThemeManager from 'bootkit-theme-manager/dist/core.js';
 
 ngOnInit() {
   ThemeManager.initThemeSystem();
@@ -64,8 +64,8 @@ ngOnInit() {
 ### React
 ```jsx
 import React, { useEffect } from 'react';
-import * as ThemeManager from 'theme-manager/dist/core.js';
-import 'theme-manager/dist/theme-light.default.ltr.css';
+import * as ThemeManager from 'bootkit-theme-manager/dist/core.js';
+import 'theme-manager/dist/bootkit-theme-light.default.ltr.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {

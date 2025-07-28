@@ -14,6 +14,7 @@ function applyCssFile() {
     const fileName = `theme-${currentTheme}.${currentPalette}.${currentDirection}.css`;
     const href = `dist/${fileName}`;
     const linkTag = document.getElementById(themeLinkId);
+    console.log(fileName);
 
     if (linkTag) {
         linkTag.setAttribute("href", href);
