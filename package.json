@@ -1,6 +1,6 @@
 {
   "name": "bootkit-theme-manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A flexible theme and color system (light/dark, RTL, palettes) for web apps using JS, Sass, and Bootstrap",
   "main": "dist/core.js",
   "module": "dist/core.js",
@@ -8,17 +8,12 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "generate": "node src/js/generate-themes.cjs",
-
     "build:theme-light-default:ltr": "sass src/scss/generated/theme-light.default.scss dist/theme-light.default.ltr.css --style=compressed",
     "build:theme-light-default:rtl": "npm run build:theme-light-default:ltr && rtlcss dist/theme-light.default.ltr.css dist/theme-light.default.rtl.css",
-
     "build:theme-dark-default:ltr": "sass src/scss/generated/theme-dark.default.scss dist/theme-dark.default.ltr.css --style=compressed",
     "build:theme-dark-default:rtl": "npm run build:theme-dark-default:ltr && rtlcss dist/theme-dark.default.ltr.css dist/theme-dark.default.rtl.css",
-
     "build:themes": "npm run build:theme-light-default:rtl && npm run build:theme-dark-default:rtl",
-
     "build:js": "rollup -c",
-
     "build": "npm run generate && npm run build:themes && npm run build:js",
     "dev": "vite",
     "start": "vite preview",
