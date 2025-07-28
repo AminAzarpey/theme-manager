@@ -7,12 +7,19 @@
   "style": "dist/theme-manager.css",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build:theme1-light1-ltr": "sass src/scss/theme1-light1.scss dist/theme1-light1.ltr.css",
-    "build:theme1-light1-rtl": "npm run build:theme1-light1-ltr && rtlcss dist/theme1-light1.ltr.css dist/theme1-light1.rtl.css",
-    "build:theme1-dark1-ltr": "sass src/scss/theme1-dark1.scss dist/theme1-dark1.ltr.css",
-    "build:theme1-dark1-rtl": "npm run build:theme1-dark1-ltr && rtlcss dist/theme1-dark1.ltr.css dist/theme1-dark1.rtl.css",
-    "build:all": "npm run build:theme1-light1-rtl && npm run build:theme1-dark1-rtl",
-    "build": "sass src/scss/index.scss dist/theme-manager.css --style=compressed && rollup -c",
+    "generate": "node src/js/generate-themes.cjs",
+
+    "build:theme-light-default:ltr": "sass src/scss/generated/theme-light.default.scss dist/theme-light.default.ltr.css --style=compressed",
+    "build:theme-light-default:rtl": "npm run build:theme-light-default:ltr && rtlcss dist/theme-light.default.ltr.css dist/theme-light.default.rtl.css",
+
+    "build:theme-dark-default:ltr": "sass src/scss/generated/theme-dark.default.scss dist/theme-dark.default.ltr.css --style=compressed",
+    "build:theme-dark-default:rtl": "npm run build:theme-dark-default:ltr && rtlcss dist/theme-dark.default.ltr.css dist/theme-dark.default.rtl.css",
+
+    "build:themes": "npm run build:theme-light-default:rtl && npm run build:theme-dark-default:rtl",
+
+    "build:js": "rollup -c",
+
+    "build": "npm run generate && npm run build:themes && npm run build:js",
     "dev": "vite",
     "start": "vite preview",
     "test": "jest",
@@ -66,5 +73,10 @@
       "html"
     ]
   },
-  "type": "module"
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/core.js"
+    }
+  },
 }

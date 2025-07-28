@@ -1,5 +1,5 @@
 
 @use "../mixins" as *;
-@import "node_modules/bootstrap/scss/bootstrap";
+@import "../../../node_modules/bootstrap/scss/bootstrap";
 @include theme("theme-light", #ffffff, #111111);
 @include palette("red", #dc3545);

@@ -1,13 +1,15 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Theme Manager Demo</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-manager@1.0.0/dist/theme-light.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-manager@1.0.0/dist/palette-default.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+
+    <!-- Main Theme Entry -->
+    <link id="theme-css" rel="stylesheet" href="./dist/theme-light.default.ltr.css" />
+
+    <!-- Bootstrap Core -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" />
 </head>
 <body>
 <div class="container py-5">
@@ -37,8 +39,9 @@
     </div>
 </div>
 
+<!-- Theme Manager JS Module -->
 <script type="module">
-    import * as ThemeManager from 'https://cdn.jsdelivr.net/npm/theme-manager@1.0.0/dist/core.js';
+    import * as ThemeManager from './src/js/core';
 
     window.addEventListener('DOMContentLoaded', () => {
         ThemeManager.initThemeSystem();

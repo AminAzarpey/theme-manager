@@ -1,102 +1,72 @@
 // src/js/core.js
 
-let currentTheme = 'light';
-let currentPalette = 'default';
-let currentDirection = 'ltr';
-let customConfig = {};
+const THEME_KEY = "tm_theme";
+const PALETTE_KEY = "tm_palette";
+const DIRECTION_KEY = "tm_dir";
 
-export function applyTheme(theme) {
-    document.body.classList.remove('theme-light', 'theme-dark');
-    document.body.classList.add(`theme-${theme}`);
-    localStorage.setItem('theme', theme);
+let currentTheme = localStorage.getItem(THEME_KEY) || "light";
+let currentPalette = localStorage.getItem(PALETTE_KEY) || "default";
+let currentDirection = localStorage.getItem(DIRECTION_KEY) || "ltr";
+
+const themeLinkId = "theme-css";
+
+function applyCssFile() {
+    const fileName = `theme-${currentTheme}.${currentPalette}.${currentDirection}.css`;
+    const href = `dist/${fileName}`;
+    const linkTag = document.getElementById(themeLinkId);
+    console.log(fileName)
+
+    if (linkTag) {
+        linkTag.setAttribute("href", href);
+    } else {
+        const link = document.createElement("link");
+        link.id = themeLinkId;
+        link.rel = "stylesheet";
+        link.href = href;
+        document.head.appendChild(link);
+    }
+}
+
+function setTheme(theme) {
     currentTheme = theme;
+    localStorage.setItem(THEME_KEY, theme);
+    applyCssFile();
 }
 
-export function applyPalette(palette) {
-    const palettes = ['palette-default', 'palette-red', 'palette-orange', 'palette-green'];
-    palettes.forEach(p => document.body.classList.remove(p));
-    document.body.classList.add(`palette-${palette}`);
-    localStorage.setItem('palette', palette);
+function setPalette(palette) {
     currentPalette = palette;
+    localStorage.setItem(PALETTE_KEY, palette);
+    applyCssFile();
 }
 
-export function setDirection(dir = 'ltr') {
-    document.documentElement.setAttribute('dir', dir);
-    localStorage.setItem('dir', dir);
+function setDirection(dir) {
     currentDirection = dir;
-}
-
-export function toggleDirection() {
-    const current = localStorage.getItem('dir') || 'ltr';
-    const next = current === 'ltr' ? 'rtl' : 'ltr';
-    setDirection(next);
-}
-
-export function toggleTheme() {
-    const current = localStorage.getItem('theme') || 'light';
-    const next = current === 'light' ? 'dark' : 'light';
-    applyTheme(next);
-}
-
-export function loadCssAsset(name) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = `https://cdn.jsdelivr.net/npm/theme-manager@1.0.0/dist/${name}.css`;
-    document.head.appendChild(link);
-}
-
-export function getCurrentTheme() {
-    return currentTheme;
-}
-
-export function getCurrentPalette() {
-    return currentPalette;
-}
-
-export function getDirection() {
-    return currentDirection;
-}
-
-export function getConfig() {
-    return customConfig;
-}
-
-export function configure(config = {}) {
-    customConfig = config;
-
-    if (config.palettes) {
-        Object.entries(config.palettes).forEach(([name, value]) => {
-            const style = document.createElement('style');
-            style.innerHTML = `
-        .palette-${name} {
-          --primary: ${value};
-        }
-      `;
-            document.head.appendChild(style);
-        });
-    }
-
-    if (config.themes) {
-        Object.entries(config.themes).forEach(([name, def]) => {
-            const style = document.createElement('style');
-            style.innerHTML = `
-        .theme-${name} {
-          --background-color: ${def.background};
-          --text-color: ${def.text};
-        }
-      `;
-            document.head.appendChild(style);
-        });
-    }
+    localStorage.setItem(DIRECTION_KEY, dir);
+    document.documentElement.setAttribute("dir", dir);
+    applyCssFile();
 }
 
 export function initThemeSystem() {
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedTheme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
-    const savedPalette = localStorage.getItem('palette') || 'default';
-    const savedDir = localStorage.getItem('dir') || 'ltr';
+    document.documentElement.setAttribute("dir", currentDirection);
+    applyCssFile();
+}
 
-    applyTheme(savedTheme);
-    applyPalette(savedPalette);
-    setDirection(savedDir);
+export function toggleTheme() {
+    setTheme(currentTheme === "light" ? "dark" : "light");
+}
+
+export function applyPalette(palette) {
+    setPalette(palette);
+}
+
+export function toggleDirection() {
+    setDirection(currentDirection === "ltr" ? "rtl" : "ltr");
+}
+
+export function getCurrentConfig() {
+    return {
+        theme: currentTheme,
+        palette: currentPalette,
+        direction: currentDirection,
+    };
 }

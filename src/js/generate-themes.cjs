@@ -16,7 +16,7 @@ if (!fs.existsSync(outputDir)) {
 function generateSCSS(theme, palette) {
     return `
 @use "../mixins" as *;
-@import "node_modules/bootstrap/scss/bootstrap";
+@import "../../../node_modules/bootstrap/scss/bootstrap";
 @include theme("theme-${theme.name}", ${theme.bg}, ${theme.text});
 @include palette("${palette.name}", ${palette.primary});
 `;

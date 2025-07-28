@@ -1,14 +1,25 @@
 
 /* THEMES */
 @use "mixins" as *;
-@use "theme-light" as *;
-@use "theme-dark" as *;
+//@use "theme-light" as *;
+//@use "theme-dark" as *;
+//
+///* PALETTES */
+//@use "palette-default" as *;
+//@use "palette-red" as *;
+//@use "palette-orange" as *;
+//@use "palette-green" as *;
 
-/* PALETTES */
-@use "palette-default" as *;
-@use "palette-red" as *;
-@use "palette-orange" as *;
-@use "palette-green" as *;
+// 🟢 Theme Definitions
+@use "generated/theme-light.default";
+@use "generated/theme-light.red";
+@use "generated/theme-light.orange";
+@use "generated/theme-light.green";
+
+@use "generated/theme-dark.default";
+@use "generated/theme-dark.red";
+@use "generated/theme-dark.orange";
+@use "generated/theme-dark.green";
 /* BOOTSTRAP */
 
 
