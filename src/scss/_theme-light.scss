@@ -1,0 +1,3 @@
+@use "mixins" as *;
+
+@include theme("theme-light", #ffffff, #1a1a1a);

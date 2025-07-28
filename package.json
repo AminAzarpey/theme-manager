@@ -1,0 +1,70 @@
+{
+  "name": "theme-manager",
+  "version": "1.0.0",
+  "description": "A flexible theme and color system (light/dark, RTL, palettes) for web apps using JS, Sass, and Bootstrap",
+  "main": "dist/core.js",
+  "module": "dist/core.js",
+  "style": "dist/theme-manager.css",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build:theme1-light1-ltr": "sass src/scss/theme1-light1.scss dist/theme1-light1.ltr.css",
+    "build:theme1-light1-rtl": "npm run build:theme1-light1-ltr && rtlcss dist/theme1-light1.ltr.css dist/theme1-light1.rtl.css",
+    "build:theme1-dark1-ltr": "sass src/scss/theme1-dark1.scss dist/theme1-dark1.ltr.css",
+    "build:theme1-dark1-rtl": "npm run build:theme1-dark1-ltr && rtlcss dist/theme1-dark1.ltr.css dist/theme1-dark1.rtl.css",
+    "build:all": "npm run build:theme1-light1-rtl && npm run build:theme1-dark1-rtl",
+    "build": "sass src/scss/index.scss dist/theme-manager.css --style=compressed && rollup -c",
+    "dev": "vite",
+    "start": "vite preview",
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": [
+    "theme",
+    "dark",
+    "light",
+    "rtl",
+    "scss",
+    "bootstrap",
+    "cdn",
+    "pwa",
+    "color",
+    "palette",
+    "ng-bootstrap",
+    "angular",
+    "react"
+  ],
+  "author": "Amin Azarpey",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "src/scss",
+    "src/js",
+    "README.md"
+  ],
+  "dependencies": {
+    "bootstrap": "^5.3.7"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.28.0",
+    "jest": "^30.0.5",
+    "jsdom": "^26.1.0",
+    "rollup": "^4.0.0",
+    "rtlcss": "^4.3.0",
+    "sass": "^1.75.0",
+    "vite": "^7.0.6"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "transform": {},
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/js/**/*.js"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "text",
+      "html"
+    ]
+  },
+  "type": "module"
+}

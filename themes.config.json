@@ -1,0 +1,32 @@
+{
+  "themes": [
+    {
+      "name": "light",
+      "bg": "#ffffff",
+      "text": "#111111"
+    },
+    {
+      "name": "dark",
+      "bg": "#1a1a1a",
+      "text": "#f2f2f2"
+    }
+  ],
+  "palettes": [
+    {
+      "name": "default",
+      "primary": "#0d6efd"
+    },
+    {
+      "name": "red",
+      "primary": "#dc3545"
+    },
+    {
+      "name": "orange",
+      "primary": "#fd7e14"
+    },
+    {
+      "name": "green",
+      "primary": "#198754"
+    }
+  ]
+}

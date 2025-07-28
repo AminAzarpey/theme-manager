@@ -1,0 +1,5 @@
+// src/scss/_palette-green.scss
+
+@use "mixins" as *;
+
+@include palette("green", #198754);

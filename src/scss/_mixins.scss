@@ -1,0 +1,22 @@
+@mixin theme($theme-name, $background, $text) {
+  body.#{$theme-name} {
+    --theme-bg: #{$background};
+    --theme-text: #{$text};
+    background-color: var(--theme-bg);
+    color: var(--theme-text);
+  }
+}
+
+@mixin palette($palette-name, $primary) {
+  body.palette-#{$palette-name} {
+    --primary: #{$primary};
+
+    .btn-primary,
+    .bg-primary,
+    .text-primary {
+      background-color: var(--primary) !important;
+      border-color: var(--primary) !important;
+      color: #fff !important;
+    }
+  }
+}
