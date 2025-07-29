@@ -7,6 +7,8 @@
 /// @param $theme-map - Sass map like $theme-colors
 /// @param $bg - body background
 /// @param $color - body color
+
+
 @mixin bootstrap-theme($theme-name, $theme-map, $bg, $color) {
   $theme-rgb-map: map-loop($theme-map, to-rgb, "$value");
 
@@ -22,6 +24,12 @@
       --#{$variable-prefix}#{$name}-rgb: #{$value};
     }
 
+    @each $name, $value in $theme-map {
+      --#{$variable-prefix}#{$name}-text-emphasis: #{color-contrast($value)};
+      --#{$variable-prefix}#{$name}-bg-subtle: #{tint-color($value, 90%)};
+      --#{$variable-prefix}#{$name}-border-subtle: #{tint-color($value, 60%)};
+    }
+
     // Body & Font
     --#{$variable-prefix}body-bg: #{$bg};
     --#{$variable-prefix}body-bg-rgb: #{to-rgb($bg)};
@@ -33,6 +41,7 @@
     --#{$variable-prefix}body-font-size: #{$font-size-base};
     --#{$variable-prefix}body-font-weight: #{$font-weight-base};
     --#{$variable-prefix}body-line-height: #{$line-height-base};
+
     @if $body-text-align != null {
       --#{$variable-prefix}body-text-align: #{$body-text-align};
     }
@@ -50,7 +59,15 @@
         --#{$prefix}btn-color: var(--#{$prefix}white);
       }
 
-      // Alerts
+      .btn-outline-#{$name} {
+        --#{$prefix}btn-color: var(--#{$prefix}#{$name});
+        --#{$prefix}btn-border-color: var(--#{$prefix}#{$name});
+        --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$name});
+        --#{$prefix}btn-hover-color: var(--#{$prefix}white);
+        --#{$prefix}btn-hover-border-color: var(--#{$prefix}#{$name});
+      }
+
+       //Alerts
       .alert-#{$name} {
         --#{$prefix}alert-color: var(--#{$prefix}#{$name}-text-emphasis);
         --#{$prefix}alert-bg: var(--#{$prefix}#{$name}-bg-subtle);
@@ -72,6 +89,7 @@
       }
 
       // Tables
+
       .table-#{$name} {
         --#{$prefix}table-color: var(--#{$prefix}#{$name}-text-emphasis);
         --#{$prefix}table-bg: var(--#{$prefix}#{$name}-bg-subtle);
@@ -87,11 +105,147 @@
       .link-#{$name} {
         color: var(--#{$prefix}#{$name});
       }
+
+      // NAv & Tabs
+      .nav-link.text-#{$name} {
+        color: var(--#{$prefix}#{$name});
+      }
+      .nav-tabs .nav-link.active {
+        border-color: var(--#{$prefix}#{$name});
+        color: var(--#{$prefix}#{$name});
+      }
+
+      // Pagination
+      .pagination .page-link {
+        color: var(--#{$prefix}#{$name});
+      }
+      .pagination .page-link:hover {
+        background-color: var(--#{$prefix}#{$name});
+        color: var(--#{$prefix}white);
+      }
+
+      // form and inputs
+      .form-check-input:checked {
+        background-color: var(--#{$prefix}#{$name});
+        border-color: var(--#{$prefix}#{$name});
+      }
+
+      // modals
+      .modal-content {
+        background-color: var(--#{$prefix}body-bg);
+        color: var(--#{$prefix}body-color);
+        border-color: var(--#{$prefix}secondary);
+      }
+
+      // Dropdowns
+
+      .dropdown-menu {
+        background-color: var(--#{$prefix}body-bg);
+        color: var(--#{$prefix}body-color);
+        border-color: var(--#{$prefix}secondary);
+      }
+      .dropdown-item:hover {
+        background-color: var(--#{$prefix}#{$name}-bg-subtle);
+        color: var(--#{$prefix}#{$name});
+      }
+
+      // Toasts
+      .toast {
+        background-color: var(--#{$prefix}#{$name}-bg-subtle);
+        color: var(--#{$prefix}#{$name}-text-emphasis);
+        border-color: var(--#{$prefix}#{$name}-border-subtle);
+      }
+
+        // Progress Bars
+
+      .progress-bar.bg-#{$name} {
+        background-color: var(--#{$prefix}#{$name}) !important;
+      }
+
+      // Accordions
+      .accordion-button:not(.collapsed) {
+        background-color: var(--#{$prefix}#{$name}-bg-subtle);
+        color: var(--#{$prefix}#{$name}-text-emphasis);
+      }
+
+      //Tables
+
+      .table-#{$name} {
+        --#{$prefix}table-color: var(--#{$prefix}#{$name}-text-emphasis);
+        --#{$prefix}table-bg: #{if($name == 'light' or $name == 'dark', $color, shift-color($color, $table-bg-scale))};
+        --#{$prefix}table-border-color: var(--#{$prefix}#{$name}-border-subtle);
+        --#{$prefix}table-bg: #{$table-bg};
+        --#{$prefix}table-color: #{$table-color};
+        --#{$prefix}table-border-color: #{$table-border-color};
+        --#{$prefix}table-hover-bg: #{$table-hover-bg};
+        --#{$prefix}table-striped-bg: #{$table-striped-bg};
+        --#{$prefix}table-active-bg: #{$table-active-bg};
+        --#{$prefix}table-caption-color: #{$table-caption-color};
+      }
+
+
+
+      .table-striped > tbody > tr:nth-of-type(#{$table-striped-order}) {
+        background-color: rgba(var(--#{$prefix}#{$name}-rgb), $table-striped-bg-factor);
+      }
+
+      .table-hover > tbody > tr:hover {
+        background-color: rgba(var(--#{$prefix}#{$name}-rgb), $table-hover-bg-factor);
+      }
+
+      .table-active {
+        background-color: rgba(var(--#{$prefix}#{$name}-rgb), $table-active-bg-factor);
+      }
+
+
+      // Tooltips and Popovers
+      .tooltip-inner {
+        background-color: var(--#{$prefix}#{$name});
+        color: var(--#{$prefix}white);
+      }
+      .popover {
+        background-color: var(--#{$prefix}body-bg);
+        color: var(--#{$prefix}body-color);
+        border-color: var(--#{$prefix}secondary);
+      }
+
+      // Carousel
+      .carousel-caption {
+        background-color: rgba(var(--#{$prefix}#{$name}-rgb), 0.7);
+        color: var(--#{$prefix}white);
+      }
+
+      // Spinners
+      .spinner-border,
+      .spinner-grow {
+        color: var(--#{$prefix}#{$name});
+      }
+
+
     }
+
+
+
 
     // ================
     // 🧾 Form Controls
     // ================
+
+
+      //.alert-primary {
+      //  background-color: var(--bs-danger);
+      //  color: var(--bs-danger-text-emphasis);
+      //  border-color: var(--bs-danger-border-subtle);
+      //}
+      //
+      //.alert-warning {
+      //  background-color: var(--bs-warning-bg-subtle);
+      //  color: var(--bs-warning-text-emphasis);
+      //  border-color: var(--bs-warning-border-subtle);
+      //}
+
+      // سایر alert ها
+
     .form-control,
     .form-select {
       background-color: var(--#{$prefix}body-bg);
@@ -104,5 +258,16 @@
       border-color: var(--#{$prefix}primary);
       box-shadow: 0 0 0 0.25rem rgba(var(--#{$prefix}primary-rgb), 0.25);
     }
+
+    .table {
+      background-color: var(--#{$prefix}table-bg);
+      color: var(--#{$prefix}table-color);
+      border-color: var(--#{$prefix}table-border-color);
+    }
+
+    .table-hover > tbody > tr:hover {
+      background-color: var(--#{$prefix}table-hover-bg);
+    }
+
   }
 }

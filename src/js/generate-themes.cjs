@@ -42,6 +42,8 @@ $body-color: theme.$theme-${theme.name}-text;
 @import "../../../node_modules/bootstrap/scss/card";
 @import "../../../node_modules/bootstrap/scss/forms";
 @import "../../../node_modules/bootstrap/scss/utilities/api";
+@import "../../../node_modules/bootstrap/scss/alert";
+@import "../../../node_modules/bootstrap/scss/bootstrap";
 
 // Generate theme class
 @include bootstrap-theme("theme-${theme.name}", $theme-colors, $body-bg, $body-color);${dirRule}
