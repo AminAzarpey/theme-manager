@@ -1,17 +1,19 @@
-// src/scss/mixins/_theme.scss
-
 @import "../../../node_modules/bootstrap/scss/functions";
 @import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/maps";
 
+/// Create full Bootstrap theme scope with all modifiers
 /// @param $theme-name - like "theme-light"
-/// @param $theme-map - theme colors map (like $theme-colors)
-/// @param $bg - background
-/// @param $color - text color
+/// @param $theme-map - Sass map like $theme-colors
+/// @param $bg - body background
+/// @param $color - body color
 @mixin bootstrap-theme($theme-name, $theme-map, $bg, $color) {
   $theme-rgb-map: map-loop($theme-map, to-rgb, "$value");
 
   @at-root .#{$theme-name} {
-    // theme color vars
+    // ========================
+    // 🎨 Core Theme Variables
+    // ========================
     @each $name, $value in $theme-map {
       --#{$variable-prefix}#{$name}: #{$value};
     }
@@ -20,13 +22,11 @@
       --#{$variable-prefix}#{$name}-rgb: #{$value};
     }
 
-    // body
+    // Body & Font
     --#{$variable-prefix}body-bg: #{$bg};
     --#{$variable-prefix}body-bg-rgb: #{to-rgb($bg)};
     --#{$variable-prefix}body-color: #{$color};
     --#{$variable-prefix}body-color-rgb: #{to-rgb($color)};
-
-    // extra (fonts, gradient)
     --#{$variable-prefix}font-sans-serif: #{inspect($font-family-sans-serif)};
     --#{$variable-prefix}font-monospace: #{inspect($font-family-monospace)};
     --#{$variable-prefix}body-font-family: #{$font-family-base};
@@ -38,5 +38,71 @@
     }
     --#{$variable-prefix}root-font-size: #{$font-size-root};
     --#{$variable-prefix}gradient: #{$gradient};
+
+    // ========================
+    // 🧩 Component Modifiers
+    // ========================
+    @each $name, $color in $theme-map {
+      // Buttons
+      .btn-#{$name} {
+        --#{$prefix}btn-bg: var(--#{$prefix}#{$name});
+        --#{$prefix}btn-border-color: var(--#{$prefix}#{$name});
+        --#{$prefix}btn-color: var(--#{$prefix}white);
+      }
+
+      // Alerts
+      .alert-#{$name} {
+        --#{$prefix}alert-color: var(--#{$prefix}#{$name}-text-emphasis);
+        --#{$prefix}alert-bg: var(--#{$prefix}#{$name}-bg-subtle);
+        --#{$prefix}alert-border-color: var(--#{$prefix}#{$name}-border-subtle);
+        --#{$prefix}alert-link-color: var(--#{$prefix}#{$name}-text-emphasis);
+      }
+
+      // Badges
+      .badge-#{$name} {
+        --#{$prefix}badge-color: var(--#{$prefix}white);
+        --#{$prefix}badge-bg: var(--#{$prefix}#{$name});
+      }
+
+      // List Groups
+      .list-group-item-#{$name} {
+        --#{$prefix}list-group-color: var(--#{$prefix}#{$name}-text-emphasis);
+        --#{$prefix}list-group-bg: var(--#{$prefix}#{$name}-bg-subtle);
+        --#{$prefix}list-group-border-color: var(--#{$prefix}#{$name}-border-subtle);
+      }
+
+      // Tables
+      .table-#{$name} {
+        --#{$prefix}table-color: var(--#{$prefix}#{$name}-text-emphasis);
+        --#{$prefix}table-bg: var(--#{$prefix}#{$name}-bg-subtle);
+        --#{$prefix}table-border-color: var(--#{$prefix}#{$name}-border-subtle);
+      }
+
+      // Text and Background helpers
+      .text-#{$name} { color: var(--#{$prefix}#{$name}) !important; }
+      .bg-#{$name}   { background-color: var(--#{$prefix}#{$name}) !important; }
+      .border-#{$name} { border-color: var(--#{$prefix}#{$name}) !important; }
+
+      // Links
+      .link-#{$name} {
+        color: var(--#{$prefix}#{$name});
+      }
+    }
+
+    // ================
+    // 🧾 Form Controls
+    // ================
+    .form-control,
+    .form-select {
+      background-color: var(--#{$prefix}body-bg);
+      color: var(--#{$prefix}body-color);
+      border-color: var(--#{$prefix}secondary);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--#{$prefix}primary);
+      box-shadow: 0 0 0 0.25rem rgba(var(--#{$prefix}primary-rgb), 0.25);
+    }
   }
 }
