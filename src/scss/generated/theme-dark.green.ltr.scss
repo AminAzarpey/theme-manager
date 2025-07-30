@@ -1,16 +1,16 @@
 
-
 // Load theme and palette
-@use "../theme-light" as theme;
+@use "../theme-dark" as theme;
 @use "../palette-green" as palette;
 @use "../mixins/theme" as *;
 @import "../../../node_modules/bootstrap/scss/functions";
+
 // Set required Bootstrap variables
 $theme-colors: palette.$theme-colors;
 $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
 
-$body-bg: theme.$theme-light-bg;
-$body-color: theme.$theme-light-text;
+$body-bg: theme.$theme-dark-bg;
+$body-color: theme.$theme-dark-text;
 
 // Import Bootstrap parts
 @import "../../../node_modules/bootstrap/scss/variables";
@@ -29,4 +29,4 @@ $body-color: theme.$theme-light-text;
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
 // Generate theme class
-@include bootstrap-theme("theme-light", $theme-colors, $body-bg, $body-color);
+@include bootstrap-theme("theme-dark", $theme-colors, $body-bg, $body-color);

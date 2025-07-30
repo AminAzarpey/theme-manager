@@ -5,23 +5,19 @@ const projectRoot = path.resolve(__dirname, "../../");
 const config = require("../../themes.config.json");
 
 const outputDir = path.join(projectRoot, "src", "scss", "generated");
-const directions = ["ltr", "rtl"];
 
 if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
 }
 
-// تولید محتوای SCSS نهایی برای هر فایل
-function generateSCSS(theme, palette, direction) {
-    const dirRule = direction === "rtl" ? `\nbody {\n  direction: rtl;\n}` : "";
-
+function generateSCSS(theme, palette) {
     return `
-
 // Load theme and palette
 @use "../theme-${theme.name}" as theme;
 @use "../palette-${palette.name}" as palette;
 @use "../mixins/theme" as *;
 @import "../../../node_modules/bootstrap/scss/functions";
+
 // Set required Bootstrap variables
 $theme-colors: palette.$theme-colors;
 $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
@@ -46,19 +42,17 @@ $body-color: theme.$theme-${theme.name}-text;
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
 // Generate theme class
-@include bootstrap-theme("theme-${theme.name}", $theme-colors, $body-bg, $body-color);${dirRule}
+@include bootstrap-theme("theme-${theme.name}", $theme-colors, $body-bg, $body-color);
 `;
 }
 
 // generate all combinations
 config.themes.forEach((theme) => {
     config.palettes.forEach((palette) => {
-        directions.forEach((dir) => {
-            const filename = `theme-${theme.name}.${palette.name}${dir === "rtl" ? ".rtl" : ""}.scss`;
-            const filepath = path.join(outputDir, filename);
-            const content = generateSCSS(theme, palette, dir);
-            fs.writeFileSync(filepath, content);
-            console.log("✅ Created:", filename);
-        });
+        const filename = `theme-${theme.name}.${palette.name}.ltr.scss`;
+        const filepath = path.join(outputDir, filename);
+        const content = generateSCSS(theme, palette);
+        fs.writeFileSync(filepath, content);
+        console.log("✅ Created:", filename);
     });
 });

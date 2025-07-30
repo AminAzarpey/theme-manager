@@ -12,7 +12,7 @@ let currentDirection = localStorage.getItem(DIRECTION_KEY) || "ltr";
 const themeLinkId = "theme-css";
 
 function applyCssFile() {
-    const fileName = `theme-${currentTheme}.${currentPalette}${currentDirection === 'rtl' ? '.rtl' : ''}.css`;
+    const fileName = `theme-${currentTheme}.${currentPalette}${currentDirection === 'rtl' ? '.rtl' : '.ltr'}.css`;
     const href = `dist/${fileName}`;
     const linkTag = document.getElementById(themeLinkId);
     console.log(fileName)
