@@ -1,21 +1,23 @@
+// =============================
+// 🎨 _theme.scss - Theme Generator
+// =============================
+
 @import "../../../node_modules/bootstrap/scss/functions";
 @import "../../../node_modules/bootstrap/scss/variables";
 @import "../../../node_modules/bootstrap/scss/maps";
 
-/// Create full Bootstrap theme scope with all modifiers
-/// @param $theme-name - like "theme-light"
-/// @param $theme-map - Sass map like $theme-colors
-/// @param $bg - body background
-/// @param $color - body color
+@mixin theme-css-vars($map) {
+  @each $key, $val in $map {
+    --#{$variable-prefix}#{$key}: #{$val};
+  }
+}
 
-
-@mixin bootstrap-theme($theme-name, $theme-map, $bg, $color) {
+@mixin bootstrap-theme($theme-name, $theme-map, $theme-vars) {
   $theme-rgb-map: map-loop($theme-map, to-rgb, "$value");
 
   @at-root .#{$theme-name} {
-    // ========================
-    // 🎨 Core Theme Variables
-    // ========================
+    @include theme-css-vars($theme-vars);
+
     @each $name, $value in $theme-map {
       --#{$variable-prefix}#{$name}: #{$value};
     }
@@ -24,233 +26,144 @@
       --#{$variable-prefix}#{$name}-rgb: #{$value};
     }
 
-    @each $name, $value in $theme-map {
-      --#{$variable-prefix}#{$name}-text-emphasis: #{color-contrast($value)};
-      --#{$variable-prefix}#{$name}-bg-subtle: #{tint-color($value, 90%)};
-      --#{$variable-prefix}#{$name}-border-subtle: #{tint-color($value, 60%)};
-    }
+    --#{$prefix}body-bg: #{map-get($theme-vars, "body-bg")};
+    --#{$prefix}body-color: #{map-get($theme-vars, "text-color")};
+    --#{$prefix}heading-color: #{map-get($theme-vars, "heading-color")};
+    --#{$prefix}muted-color: #{map-get($theme-vars, "muted-color")};
+    --#{$prefix}border-color: #{map-get($theme-vars, "border-color")};
+    --#{$prefix}emphasis-color: #{map-get($theme-vars, "text-color")};
+    --#{$prefix}emphasis-color-rgb: #{to-rgb(map-get($theme-vars, "text-color"))};
 
-    // Body & Font
-    --#{$variable-prefix}body-bg: #{$bg};
-    --#{$variable-prefix}body-bg-rgb: #{to-rgb($bg)};
-    --#{$variable-prefix}body-color: #{$color};
-    --#{$variable-prefix}body-color-rgb: #{to-rgb($color)};
-    --#{$variable-prefix}font-sans-serif: #{inspect($font-family-sans-serif)};
-    --#{$variable-prefix}font-monospace: #{inspect($font-family-monospace)};
-    --#{$variable-prefix}body-font-family: #{$font-family-base};
-    --#{$variable-prefix}body-font-size: #{$font-size-base};
-    --#{$variable-prefix}body-font-weight: #{$font-weight-base};
-    --#{$variable-prefix}body-line-height: #{$line-height-base};
-
+    --#{$prefix}font-sans-serif: #{inspect($font-family-sans-serif)};
+    --#{$prefix}font-monospace: #{inspect($font-family-monospace)};
+    --#{$prefix}body-font-family: #{$font-family-base};
+    --#{$prefix}body-font-size: #{$font-size-base};
+    --#{$prefix}body-font-weight: #{$font-weight-base};
+    --#{$prefix}body-line-height: #{$line-height-base};
     @if $body-text-align != null {
-      --#{$variable-prefix}body-text-align: #{$body-text-align};
+      --#{$prefix}body-text-align: #{$body-text-align};
     }
-    --#{$variable-prefix}root-font-size: #{$font-size-root};
-    --#{$variable-prefix}gradient: #{$gradient};
+    --#{$prefix}root-font-size: #{$font-size-root};
+    --#{$prefix}gradient: #{$gradient};
 
-    // ========================
-    // 🧩 Component Modifiers
-    // ========================
-    @each $name, $color in $theme-map {
-      // Buttons
-      .btn-#{$name} {
-        --#{$prefix}btn-bg: var(--#{$prefix}#{$name});
-        --#{$prefix}btn-border-color: var(--#{$prefix}#{$name});
-        --#{$prefix}btn-color: var(--#{$prefix}white);
-      }
+    // Components
 
-      .btn-outline-#{$name} {
-        --#{$prefix}btn-color: var(--#{$prefix}#{$name});
-        --#{$prefix}btn-border-color: var(--#{$prefix}#{$name});
-        --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$name});
-        --#{$prefix}btn-hover-color: var(--#{$prefix}white);
-        --#{$prefix}btn-hover-border-color: var(--#{$prefix}#{$name});
-      }
+    // Tables
+    --#{$prefix}table-bg: var(--#{$prefix}body-bg);
+    --#{$prefix}table-color: var(--#{$prefix}body-color);
+    --#{$prefix}table-border-color: var(--#{$prefix}border-color);
+    --#{$prefix}table-hover-bg: rgba(var(--#{$prefix}emphasis-color-rgb), 0.05);
+    --#{$prefix}table-striped-bg: rgba(var(--#{$prefix}emphasis-color-rgb), 0.03);
+    --#{$prefix}table-active-bg: rgba(var(--#{$prefix}emphasis-color-rgb), 0.1);
+    --#{$prefix}table-hover-color: var(--#{$prefix}body-color);
+    --#{$prefix}table-active-color: var(--#{$prefix}body-color);
 
-       //Alerts
-      .alert-#{$name} {
-        --#{$prefix}alert-color: var(--#{$prefix}#{$name}-text-emphasis);
-        --#{$prefix}alert-bg: var(--#{$prefix}#{$name}-bg-subtle);
-        --#{$prefix}alert-border-color: var(--#{$prefix}#{$name}-border-subtle);
-        --#{$prefix}alert-link-color: var(--#{$prefix}#{$name}-text-emphasis);
-      }
+    //Buttons
 
-      // Badges
-      .badge-#{$name} {
-        --#{$prefix}badge-color: var(--#{$prefix}white);
-        --#{$prefix}badge-bg: var(--#{$prefix}#{$name});
-      }
+    .btn{
+      --bs-btn-color : #{map-get($theme-vars, "btn-text-color")};
 
-      // List Groups
-      .list-group-item-#{$name} {
-        --#{$prefix}list-group-color: var(--#{$prefix}#{$name}-text-emphasis);
-        --#{$prefix}list-group-bg: var(--#{$prefix}#{$name}-bg-subtle);
-        --#{$prefix}list-group-border-color: var(--#{$prefix}#{$name}-border-subtle);
-      }
+    }
+    .btn-close{
+    --bs-btn-color :var(--#{$prefix}primary)
+    }
 
-      // Tables
-
-      .table-#{$name} {
-        --#{$prefix}table-color: var(--#{$prefix}#{$name}-text-emphasis);
-        --#{$prefix}table-bg: var(--#{$prefix}#{$name}-bg-subtle);
-        --#{$prefix}table-border-color: var(--#{$prefix}#{$name}-border-subtle);
-      }
-
-      // Text and Background helpers
-      .text-#{$name} { color: var(--#{$prefix}#{$name}) !important; }
-      .bg-#{$name}   { background-color: var(--#{$prefix}#{$name}) !important; }
-      .border-#{$name} { border-color: var(--#{$prefix}#{$name}) !important; }
-
-      // Links
-      .link-#{$name} {
-        color: var(--#{$prefix}#{$name});
-      }
-
-      // NAv & Tabs
-      .nav-link.text-#{$name} {
-        color: var(--#{$prefix}#{$name});
-      }
-      .nav-tabs .nav-link.active {
-        border-color: var(--#{$prefix}#{$name});
-        color: var(--#{$prefix}#{$name});
-      }
-
-      // Pagination
-      .pagination .page-link {
-        color: var(--#{$prefix}#{$name});
-      }
-      .pagination .page-link:hover {
-        background-color: var(--#{$prefix}#{$name});
-        color: var(--#{$prefix}white);
-      }
-
-      // form and inputs
-      .form-check-input:checked {
-        background-color: var(--#{$prefix}#{$name});
-        border-color: var(--#{$prefix}#{$name});
-      }
-
-      // modals
-      .modal-content {
-        background-color: var(--#{$prefix}body-bg);
-        color: var(--#{$prefix}body-color);
-        border-color: var(--#{$prefix}secondary);
-      }
-
-      // Dropdowns
-
-      .dropdown-menu {
-        background-color: var(--#{$prefix}body-bg);
-        color: var(--#{$prefix}body-color);
-        border-color: var(--#{$prefix}secondary);
-      }
-      .dropdown-item:hover {
-        background-color: var(--#{$prefix}#{$name}-bg-subtle);
-        color: var(--#{$prefix}#{$name});
-      }
-
-      // Toasts
-      .toast {
-        background-color: var(--#{$prefix}#{$name}-bg-subtle);
-        color: var(--#{$prefix}#{$name}-text-emphasis);
-        border-color: var(--#{$prefix}#{$name}-border-subtle);
-      }
-
-        // Progress Bars
-
-      .progress-bar.bg-#{$name} {
-        background-color: var(--#{$prefix}#{$name}) !important;
-      }
-
-      // Accordions
-      .accordion-button:not(.collapsed) {
-        background-color: var(--#{$prefix}#{$name}-bg-subtle);
-        color: var(--#{$prefix}#{$name}-text-emphasis);
-      }
-
-      //Tables
-
-      .table-#{$name} {
-        --#{$prefix}table-color: var(--#{$prefix}#{$name}-text-emphasis);
-        --#{$prefix}table-bg: #{if($name == 'light' or $name == 'dark', $color, shift-color($color, $table-bg-scale))};
-        --#{$prefix}table-border-color: var(--#{$prefix}#{$name}-border-subtle);
-        --#{$prefix}table-bg: #{$table-bg};
-        --#{$prefix}table-color: #{$table-color};
-        --#{$prefix}table-border-color: #{$table-border-color};
-        --#{$prefix}table-hover-bg: #{$table-hover-bg};
-        --#{$prefix}table-striped-bg: #{$table-striped-bg};
-        --#{$prefix}table-active-bg: #{$table-active-bg};
-        --#{$prefix}table-caption-color: #{$table-caption-color};
-      }
-
-
-
-      .table-striped > tbody > tr:nth-of-type(#{$table-striped-order}) {
-        background-color: rgba(var(--#{$prefix}#{$name}-rgb), $table-striped-bg-factor);
-      }
-
-      .table-hover > tbody > tr:hover {
-        background-color: rgba(var(--#{$prefix}#{$name}-rgb), $table-hover-bg-factor);
-      }
-
-      .table-active {
-        background-color: rgba(var(--#{$prefix}#{$name}-rgb), $table-active-bg-factor);
-      }
-
-
-      // Tooltips and Popovers
-      .tooltip-inner {
-        background-color: var(--#{$prefix}#{$name});
-        color: var(--#{$prefix}white);
-      }
-      .popover {
-        background-color: var(--#{$prefix}body-bg);
-        color: var(--#{$prefix}body-color);
-        border-color: var(--#{$prefix}secondary);
-      }
-
-      // Carousel
-      .carousel-caption {
-        background-color: rgba(var(--#{$prefix}#{$name}-rgb), 0.7);
-        color: var(--#{$prefix}white);
-      }
-
-      // Spinners
-      .spinner-border,
-      .spinner-grow {
-        color: var(--#{$prefix}#{$name});
-      }
-
-
+    .btn-primary, .btn-danger, .btn-success, .btn-warning ,.btn-info ,.btn-secondary{
+      --bs-btn-color : white
     }
 
 
+    //Alerts
+    .alert{
+      --bs-primary-bg-subtle : var(--#{$prefix}primary);
+      --bs-primary-text-emphasis :  white;
+      --bs-primary-border-subtle :  rgba(var(--#{$prefix}primary), 0.03);
+    }
 
+    //Toasts
+    --#{$prefix}toast-bg: #{map-get($theme-vars, "toast-bg")};
+    --#{$prefix}toast-color: #{map-get($theme-vars, "toast-color")};
+    --#{$prefix}toast-header-bg: #{map-get($theme-vars, "toast-header-bg")};
+    --#{$prefix}toast-header-color: #{map-get($theme-vars, "toast-header-color")};
 
-    // ================
-    // 🧾 Form Controls
-    // ================
+    .toast {
+      --bs-toast-bg: #{map-get($theme-vars, "toast-bg")};
+      --bs-toast-color: #{map-get($theme-vars, "toast-color")};
+      --bs-toast-header-bg: #{map-get($theme-vars, "toast-header-bg")};
+      --bs-toast-header-color: #{map-get($theme-vars, "toast-header-color")};
+      --bs-toast-border-color: var(--bs-border-color);
+      --bs-toast-border-width: var(--bs-border-width);
+      --bs-toast-border-radius: var(--bs-border-radius);
+      --bs-toast-box-shadow: var(--bs-box-shadow);
+      --bs-toast-padding-x: 0.75rem;
+      --bs-toast-padding-y: 0.5rem;
+      --bs-toast-spacing: 1.5rem;
+      --bs-toast-max-width: 350px;
+      --bs-toast-font-size: 0.875rem;
+      --bs-toast-header-border-color: var(--bs-border-color);
 
+      width: var(--bs-toast-max-width);
+      max-width: 100%;
+      font-size: var(--bs-toast-font-size);
+      color: var(--bs-toast-color);
+      pointer-events: auto;
+      background-color: var(--bs-toast-bg);
+      background-clip: padding-box;
+      border: var(--bs-toast-border-width) solid var(--bs-toast-border-color);
+      box-shadow: var(--bs-toast-box-shadow);
+      border-radius: var(--bs-toast-border-radius);
+    }
 
-      //.alert-primary {
-      //  background-color: var(--bs-danger);
-      //  color: var(--bs-danger-text-emphasis);
-      //  border-color: var(--bs-danger-border-subtle);
-      //}
-      //
-      //.alert-warning {
-      //  background-color: var(--bs-warning-bg-subtle);
-      //  color: var(--bs-warning-text-emphasis);
-      //  border-color: var(--bs-warning-border-subtle);
-      //}
+    .toast-header {
+      background-color: var(--bs-toast-header-bg);
+      color: var(--bs-toast-header-color);
+      border-bottom: var(--bs-toast-border-width) solid var(--bs-toast-header-border-color);
+    }
 
-      // سایر alert ها
-
-    .form-control,
-    .form-select {
+    // Dropdown
+    .dropdown-menu {
       background-color: var(--#{$prefix}body-bg);
       color: var(--#{$prefix}body-color);
-      border-color: var(--#{$prefix}secondary);
+      border-color: var(--#{$prefix}border-color);
+    }
+
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+      background-color: rgba(var(--#{$prefix}primary-rgb), 0.1);
+      color: var(--#{$prefix}primary);
+    }
+
+    // Pagination
+    .pagination{
+      --bs-pagination-color : var(--#{$prefix}primary);
+      --bs-pagination-focus-color : var(--#{$prefix}primary)
+    }
+    .pagination .page-link:hover {
+      background-color: rgba(var(--#{$prefix}primary-rgb), 0.1);
+      color: var(--#{$prefix}primary);
+    }
+    .pagination .page-item.active .page-link {
+      background-color: var(--#{$prefix}primary);
+      border-color: var(--#{$prefix}primary);
+      color: var(--#{$prefix}white);
+    }
+    .pagination .page-item.active .page-link:hover,
+    .pagination .page-item.active .page-link:focus {
+      background-color: var(--#{$prefix}primary);
+      border-color: var(--#{$prefix}primary);
+      color: var(--#{$prefix}white);
+    }
+
+    // Form
+    .form-check-input:focus{
+      border-color: rgba(var(--#{$prefix}primary-rgb), 0.1);
+      box-shadow: 0 0 0 0.25rem rgba(var(--#{$prefix}primary-rgb), 0.25);
+    ;
+    }
+    .form-check-input:checked{
+      background-color: var(--#{$prefix}primary);
+      border-color: var(--#{$prefix}primary);
+
     }
 
     .form-control:focus,
@@ -259,15 +172,27 @@
       box-shadow: 0 0 0 0.25rem rgba(var(--#{$prefix}primary-rgb), 0.25);
     }
 
-    .table {
-      background-color: var(--#{$prefix}table-bg);
-      color: var(--#{$prefix}table-color);
-      border-color: var(--#{$prefix}table-border-color);
+    // Accordions
+    .accordion-button:not(.collapsed) {
+      background-color: rgba(var(--#{$prefix}primary-rgb), 0.05);
+      color: var(--#{$prefix}body-color);
     }
 
-    .table-hover > tbody > tr:hover {
-      background-color: var(--#{$prefix}table-hover-bg);
+    // Tooltip & Popover
+    .tooltip-inner {
+      background-color: var(--#{$prefix}primary);
+      color: var(--#{$prefix}white);
+    }
+    .popover {
+      background-color: var(--#{$prefix}body-bg);
+      color: var(--#{$prefix}body-color);
+      border-color: var(--#{$prefix}border-color);
     }
 
+    // Spinner
+    .spinner-border,
+    .spinner-grow {
+      color: var(--#{$prefix}primary);
+    }
   }
 }

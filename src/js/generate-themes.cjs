@@ -21,9 +21,7 @@ function generateSCSS(theme, palette) {
 // Set required Bootstrap variables
 $theme-colors: palette.$theme-colors;
 $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
-
-$body-bg: theme.$theme-${theme.name}-bg;
-$body-color: theme.$theme-${theme.name}-text;
+$theme-vars: theme.$theme-${theme.name}-vars;
 
 // Import Bootstrap parts
 @import "../../../node_modules/bootstrap/scss/variables";
@@ -42,11 +40,10 @@ $body-color: theme.$theme-${theme.name}-text;
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
 // Generate theme class
-@include bootstrap-theme("theme-${theme.name}", $theme-colors, $body-bg, $body-color);
+@include bootstrap-theme("theme-${theme.name}", $theme-colors, $theme-vars);
 `;
 }
 
-// generate all combinations
 config.themes.forEach((theme) => {
     config.palettes.forEach((palette) => {
         const filename = `theme-${theme.name}.${palette.name}.ltr.scss`;

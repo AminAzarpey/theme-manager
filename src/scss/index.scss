@@ -1,10 +1,10 @@
 /* PALETTE THEMES*/
 
 
+
 @use "./theme-light" as lightTheme;
 @use "./theme-dark" as darkTheme;
 
-@use "./palette-orange" as activePalette;
 @use "./palette-default" as defaultPalette;
 
 @use "mixins/theme" as *;
@@ -16,11 +16,14 @@
 
 
 // 3. تعریف متغیرهای مورد انتظار Bootstrap
-$theme-colors: activePalette.$theme-colors;
+$theme-colors: defaultPalette.$theme-colors;
 $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
 
-$body-bg: lightTheme.$theme-light-bg;
-$body-color: lightTheme.$theme-light-text;
+$theme-vars: lightTheme.$theme-light-vars;
+
+
+//$body-bg: lightTheme.$theme-light-bg;
+//$body-color: lightTheme.$theme-light-text;
 
 // 4. Bootstrap core vars
 @import "../../node_modules/bootstrap/scss/variables";
@@ -60,6 +63,19 @@ $body-color: lightTheme.$theme-light-text;
 // 6. Utilities API
 @import "../../node_modules/bootstrap/scss/utilities/api";
 
+
+//:root {
+//  @include theme-css-vars(lightTheme.$theme-light-vars);
+//
+//  @each $name, $value in defaultPalette.$theme-colors {
+//    --#{$variable-prefix}#{$name}: #{$value};
+//  }
+//
+//  @each $name, $value in map-loop(defaultPalette.$theme-colors, to-rgb, "$value") {
+//    --#{$variable-prefix}#{$name}-rgb: #{$value};
+//  }
+//}
+
 // 7. حالت کلاس دستی (theme-light, theme-dark, ...)
 @include bootstrap-theme("theme-light", $theme-colors, $body-bg, $body-color);
 
@@ -70,8 +86,7 @@ $body-color: lightTheme.$theme-light-text;
     @include bootstrap-theme(
                     "theme-auto",
                     defaultPalette.$theme-colors,
-                    lightTheme.$theme-light-bg,
-                    lightTheme.$theme-light-text
+                    lightTheme.$theme-light-vars
     );
   }
 
@@ -79,8 +94,7 @@ $body-color: lightTheme.$theme-light-text;
     @include bootstrap-theme(
                     "theme-auto",
                     defaultPalette.$theme-colors,
-                    darkTheme.$theme-dark-bg,
-                    darkTheme.$theme-dark-text
+                    darkTheme.$theme-dark-vars
     );
   }
 }

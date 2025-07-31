@@ -8,9 +8,7 @@
 // Set required Bootstrap variables
 $theme-colors: palette.$theme-colors;
 $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
-
-$body-bg: theme.$theme-light-bg;
-$body-color: theme.$theme-light-text;
+$theme-vars: theme.$theme-light-vars;
 
 // Import Bootstrap parts
 @import "../../../node_modules/bootstrap/scss/variables";
@@ -29,4 +27,4 @@ $body-color: theme.$theme-light-text;
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
 // Generate theme class
-@include bootstrap-theme("theme-light", $theme-colors, $body-bg, $body-color);
+@include bootstrap-theme("theme-light", $theme-colors, $theme-vars);

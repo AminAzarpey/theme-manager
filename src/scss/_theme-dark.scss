@@ -1,2 +1,21 @@
-$theme-dark-bg: #212529;
-$theme-dark-text: #f8f9fa;
+$theme-dark-vars: (
+        body-bg: #1a1a1a,
+        body-color: #f2f2f2,
+        heading-color: #ffffff,
+        border-color: #3a3a3a,
+        text-color: #e2e2e2,
+        table-color: #f1f1f1,
+        table-bg: #1a1a1a,
+        table-border-color: #333333,
+        table-hover-bg: rgba(255, 255, 255, 0.05),
+        table-striped-bg: rgba(255, 255, 255, 0.03),
+        table-active-bg: rgba(255, 255, 255, 0.07),
+        table-caption-color: #a0a0a0,
+        toast-bg: #2a2a2a,
+        toast-color: #eeeeee,
+        toast-header-bg: #2a2a2a,
+        toast-header-color: #dddddd,
+        muted-color: #999999,
+        emphasis-color: #ffffff,
+        btn-text-color: #ffffff,
+);
