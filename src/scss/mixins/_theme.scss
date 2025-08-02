@@ -34,12 +34,12 @@
     --#{$prefix}emphasis-color: #{map-get($theme-vars, "text-color")};
     --#{$prefix}emphasis-color-rgb: #{to-rgb(map-get($theme-vars, "text-color"))};
 
-    --#{$prefix}font-sans-serif: #{inspect($font-family-sans-serif)};
-    --#{$prefix}font-monospace: #{inspect($font-family-monospace)};
-    --#{$prefix}body-font-family: #{$font-family-base};
-    --#{$prefix}body-font-size: #{$font-size-base};
-    --#{$prefix}body-font-weight: #{$font-weight-base};
-    --#{$prefix}body-line-height: #{$line-height-base};
+    //--#{$prefix}font-sans-serif: #{inspect($font-family-sans-serif)};
+    //--#{$prefix}font-monospace: #{inspect($font-family-monospace)};
+    //--#{$prefix}body-font-family: #{$font-family-base};
+    //--#{$prefix}body-font-size: #{$font-size-base};
+    //--#{$prefix}body-font-weight: #{$font-weight-base};
+    //--#{$prefix}body-line-height: #{$line-height-base};
     @if $body-text-align != null {
       --#{$prefix}body-text-align: #{$body-text-align};
     }
