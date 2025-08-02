@@ -3,9 +3,16 @@
   "version": "1.1.0",
   "description": "A flexible theme and color system (light/dark, RTL, palettes) for web apps using JS, Sass, and Bootstrap",
   "main": "dist/core.js",
-  "module": "dist/core.js",
+  "module": "dist/core.mjs",
+  "types": "dist/core.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/core.js",
+      "import": "./dist/core.mjs",
+      "types": "./dist/core.d.ts"
+    }
+  },
   "style": "dist/theme-light.default.ltr.css",
-  "types": "dist/index.d.ts",
   "scripts": {
     "generate": "node src/js/generate-themes.cjs",
     "build:themes:all": "sass src/scss/generated:dist --style=compressed && npm run build:rtl:all",
@@ -45,11 +52,16 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.28.0",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
     "jest": "^30.0.5",
     "jsdom": "^26.1.0",
-    "rollup": "^4.0.0",
+    "rollup": "^4.46.2",
+    "rollup-plugin-dts": "^6.2.1",
     "rtlcss": "^4.3.0",
     "sass": "^1.75.0",
+    "typescript": "^5.9.2",
     "vite": "^7.0.6"
   },
   "jest": {
@@ -65,10 +77,5 @@
       "html"
     ]
   },
-  "type": "module",
-  "exports": {
-    ".": {
-      "import": "./dist/core.js"
-    }
-  }
+  "type": "module"
 }
