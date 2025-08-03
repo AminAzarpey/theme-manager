@@ -7,18 +7,26 @@ const DIRECTION_KEY = "tm_dir";
 let currentTheme;
 let currentPalette;
 let currentDirection;
-let baseHref = "dist"; // default path
+let baseHref = "dist";
 const themeLinkId = "theme-css";
 
 /**
- * Resolve initial configuration from localStorage, user config, or system defaults.
- * @param {ThemeConfig} config
+ * Dispatches a custom theme change event.
  */
+function emitThemeChange() {
+    const detail = {
+        theme: currentTheme,
+        palette: currentPalette,
+        direction: currentDirection,
+    };
+    window.dispatchEvent(new CustomEvent("themeChange", { detail }));
+}
+
 function resolveInitialConfig(config = {}) {
     currentTheme =
         (!config.ignoreStorage && localStorage.getItem(THEME_KEY)) ||
         config.theme ||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
 
     currentPalette =
         (!config.ignoreStorage && localStorage.getItem(PALETTE_KEY)) ||
@@ -33,11 +41,10 @@ function resolveInitialConfig(config = {}) {
     baseHref = config.baseHref || baseHref;
 }
 
-/**
- * Apply the theme CSS file based on the current configuration.
- */
 function applyCssFile() {
-    const fileName = `theme-${currentTheme}.${currentPalette}${currentDirection === 'rtl' ? '.rtl' : '.ltr'}.css`;
+    const fileName = `theme-${currentTheme}.${currentPalette}${
+        currentDirection === "rtl" ? ".rtl" : ".ltr"
+    }.css`;
     const href = `${baseHref}/${fileName}`;
     const linkTag = document.getElementById(themeLinkId);
 
@@ -56,16 +63,17 @@ function applyCssFile() {
 }
 
 /**
- * Initialize the theme system with optional configuration.
+ * Initializes the theme system.
  * @param {ThemeConfig} config
  */
 export function initThemeSystem(config = {}) {
     resolveInitialConfig(config);
     applyCssFile();
+    emitThemeChange(); // NEW
 }
 
 /**
- * Toggle between 'light' and 'dark' themes.
+ * Toggles between 'light' and 'dark' theme.
  */
 export function toggleTheme() {
     const next = currentTheme === "light" ? "dark" : "light";
@@ -73,46 +81,43 @@ export function toggleTheme() {
 }
 
 /**
- * Set a new theme manually.
+ * Sets a new theme.
  * @param {string} theme
  */
 export function setTheme(theme) {
     currentTheme = theme;
     localStorage.setItem(THEME_KEY, theme);
     applyCssFile();
+    emitThemeChange(); // NEW
 }
 
 /**
- * Apply a new palette.
+ * Applies a new palette.
  * @param {string} palette
  */
 export function applyPalette(palette) {
     currentPalette = palette;
     localStorage.setItem(PALETTE_KEY, palette);
     applyCssFile();
+    emitThemeChange(); // NEW
 }
 
 /**
- * Toggle between 'ltr' and 'rtl' directions.
- */
-export function toggleDirection() {
-    const next = currentDirection === "ltr" ? "rtl" : "ltr";
-    setDirection(next);
-}
-
-/**
- * Set the text direction manually.
- * @param {string} dir
+ * Sets the text direction.
+ * @param {'ltr' | 'rtl'} dir
  */
 export function setDirection(dir) {
     currentDirection = dir;
     localStorage.setItem(DIRECTION_KEY, dir);
     applyCssFile();
+    emitThemeChange(); // NEW
 }
 
-/**
- * Reset theme system to defaults and clear local storage.
- */
+export function toggleDirection() {
+    const next = currentDirection === "ltr" ? "rtl" : "ltr";
+    setDirection(next);
+}
+
 export function resetThemeSystem() {
     localStorage.removeItem(THEME_KEY);
     localStorage.removeItem(PALETTE_KEY);
@@ -120,10 +125,6 @@ export function resetThemeSystem() {
     initThemeSystem();
 }
 
-/**
- * Get current theme configuration.
- * @returns {{theme: string, palette: string, direction: string}}
- */
 export function getCurrentConfig() {
     return {
         theme: currentTheme,

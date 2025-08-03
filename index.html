@@ -113,6 +113,55 @@
         </ul>
     </div>
 
+<!--    Texts-->
+    <p class="text-primary">This is a primary text.</p>
+    <p class="text-success">Success message goes here.</p>
+    <p class="text-danger">Error: Something went wrong!</p>
+    <p class="text-muted">This is muted secondary text.</p>
+    <p class="text-white">White text on dark background</p>
+    <p class="text-dark">White text on dark background</p>
+
+
+<!--    Card-->
+
+    <div class="card text-center">
+        <div class="card-header">
+            Featured
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+        <div class="card-footer text-muted">
+            2 days ago
+        </div>
+    </div>
+
+    <div class="card" style="width: 18rem;">
+        <img src="https://via.placeholder.com/286x180" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Image Card</h5>
+            <p class="card-text">This card has an image on top and supporting text below.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="https://via.placeholder.com/150" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Horizontal Card</h5>
+                    <p class="card-text">This is a wider card with text and a side image.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- TOAST -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div class="toast show">
@@ -145,6 +194,15 @@
         document.getElementById('paletteSelect')?.addEventListener('change', (e) => {
             ThemeManager.applyPalette(e.target.value);
         });
+    });
+    window.addEventListener('themeChange', (e) => {
+        const { theme, palette, direction } = e.detail;
+        console.log('🎯 Theme changed:', theme);
+        console.log('🎨 Palette changed:', palette);
+        console.log('↔ Direction changed:', direction);
+
+        // مثلا کلاس body رو تنظیم کن
+        document.body.dataset.theme = theme;
     });
 </script>
 
